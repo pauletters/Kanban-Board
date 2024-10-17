@@ -13,8 +13,8 @@ declare global {
   }
 }
 
+// This function checks if the token is valid and not expired
  const authenticateToken = (req: Request, res: Response, next: NextFunction): void | Response => {
-  // TODO: verify the token exists and add the user data to the request object
  const authHeader = req.headers['authorization'];
  const token = authHeader && authHeader.split(' ')[1];
 
