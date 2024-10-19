@@ -2,8 +2,15 @@ import { TicketData } from '../interfaces/TicketData';
 import { ApiMessage } from '../interfaces/ApiMessage';
 import Auth from '../utils/auth';
 
+const checkAuthBeforeRequest = () => {
+  if (!Auth.checkAuthAndRedirect()) {
+    throw new Error('Not authenticated');
+  }
+};
+
 const retrieveTickets = async () => {
   try {
+    checkAuthBeforeRequest();
     const response = await fetch(
       '/api/tickets/',
       {
@@ -28,6 +35,7 @@ const retrieveTickets = async () => {
 
 const retrieveTicket = async (id: number | null): Promise<TicketData> => {
   try {
+    checkAuthBeforeRequest();
     const response = await fetch(
       `/api/tickets/${id}`,
       {
@@ -52,6 +60,7 @@ const retrieveTicket = async (id: number | null): Promise<TicketData> => {
 
 const createTicket = async (body: TicketData) => {
   try {
+    checkAuthBeforeRequest();
     const response = await fetch(
       '/api/tickets/', {
         method: 'POST',
@@ -79,6 +88,7 @@ const createTicket = async (body: TicketData) => {
 
 const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketData> => {
   try {
+    checkAuthBeforeRequest();
     const response = await fetch(
       `/api/tickets/${ticketId}`, {
         method: 'PUT',
@@ -104,6 +114,7 @@ const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketD
 
 const deleteTicket = async (ticketId: number): Promise<ApiMessage> => {
   try {
+    checkAuthBeforeRequest();
     const response = await fetch(
       `/api/tickets/${ticketId}`, {
         method: 'DELETE',
