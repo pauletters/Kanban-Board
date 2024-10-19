@@ -1,38 +1,48 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { withAuth } from '../utils/withAuth';
+import { withAuth, WithAuthProps } from '../utils/withAuth';
 import { retrieveTicket, updateTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 
-const EditTicket: React.FC = () => {
+interface EditTicketProps extends WithAuthProps {}
+
+const EditTicket: React.FC<EditTicketProps> = ({ checkAuth }) => {
   const [ticket, setTicket] = useState<TicketData | undefined>();
 
   const navigate = useNavigate();
   const { state } = useLocation();
 
   const fetchTicket = async (ticketId: TicketData) => {
-    try {
-      const data = await retrieveTicket(ticketId.id);
-      setTicket(data);
-    } catch (err) {
-      console.error('Failed to retrieve ticket:', err);
+    if (checkAuth()) {
+      try {
+        const data = await retrieveTicket(ticketId.id);
+        setTicket(data);
+      } catch (err) {
+        console.error('Failed to retrieve ticket:', err);
+        navigate('/');
+      }
+    } else {
+      navigate('/login');
     }
-  }
+  };
 
   useEffect(() => {
     fetchTicket(state);
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (ticket && ticket.id !== null){
-      updateTicket(ticket.id, ticket);
-      navigate('/');
+    if (checkAuth() && ticket && ticket.id !== null) {
+      try {
+        await updateTicket(ticket.id, ticket);
+        navigate('/');
+      } catch (err) {
+        console.error('Failed to update ticket:', err);
+      }
+    } else {
+      navigate('/login');
     }
-    else{
-      console.error('Ticket data is undefined.');
-    }
-  }
+  };
 
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -47,42 +57,40 @@ const EditTicket: React.FC = () => {
   return (
     <>
       <div className='container'>
-        {
-          ticket ? (
-            <form className='form' onSubmit={handleSubmit}>
-              <h1>Edit Ticket</h1>
-              <label htmlFor='tName'>Ticket Name</label>
-              <textarea
-                id='tName'
-                name='name'
-                value={ticket.name || ''}
-                onChange={handleTextAreaChange}
-                />
-              <label htmlFor='tStatus'>Ticket Status</label>
-              <select
-                name='status'
-                id='tStatus'
-                value={ticket.status || ''}
-                onChange={handleChange}
-              >
-                <option  value='Todo'>Todo</option>
-                <option  value='In Progress'>In Progress</option>
-                <option  value='Done'>Done</option>
+        {ticket ? (
+          <form className='form' onSubmit={handleSubmit}>
+            <h1>Edit Ticket</h1>
+            <label htmlFor='tName'>Ticket Name</label>
+            <textarea
+              id='tName'
+              name='name'
+              value={ticket.name || ''}
+              onChange={handleTextAreaChange}
+            />
+            <label htmlFor='tStatus'>Ticket Status</label>
+            <select
+              name='status'
+              id='tStatus'
+              value={ticket.status || ''}
+              onChange={handleChange}
+            >
+              <option value='Todo'>Todo</option>
+              <option value='In Progress'>In Progress</option>
+              <option value='Done'>Done</option>
             </select>
             <label htmlFor='tDescription'>Ticket Description</label>
-              <textarea
-                id='tDescription'
-                name='description'
-                value={ticket.description || ''}
-                onChange={handleTextAreaChange}
-              />
-              <button type='submit'>Submit Form</button>
-            </form>
-          ) : (
-            <div>Issues fetching ticket</div>
-          )
-        }
-      </div>  
+            <textarea
+              id='tDescription'
+              name='description'
+              value={ticket.description || ''}
+              onChange={handleTextAreaChange}
+            />
+            <button type='submit'>Submit Form</button>
+          </form>
+        ) : (
+          <div>Issues fetching ticket</div>
+        )}
+      </div>
     </>
   );
 };

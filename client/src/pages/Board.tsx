@@ -93,8 +93,8 @@ const Board: React.FC<BoardProps> = ({ checkAuth }) => {
         </div>  
       ) : (
           <div className='board'>
-            <Link to='/create' onClick={handleNewTicket}>New Ticket
-            <button type='button' id='create-ticket-link'>
+            <Link to='/create' onClick={handleNewTicket}>
+            <button type='button' id='create-ticket-link'>New Ticket
               </button>
               </Link>
             <div className='board-display'>
