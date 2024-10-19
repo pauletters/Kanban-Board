@@ -1,6 +1,6 @@
 import { useEffect, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import withAuth from '../utils/withAuth';
 import { retrieveTickets, deleteTicket } from '../api/ticketAPI';
 import ErrorPage from './ErrorPage';
 import Swimlane from '../components/Swimlane';
@@ -11,7 +11,7 @@ import auth from '../utils/auth';
 
 const boardStates = ['Todo', 'In Progress', 'Done'];
 
-const Board = () => {
+const Board: React.FC = () => {
   const [tickets, setTickets] = useState<TicketData[]>([]);
   const [error, setError] = useState(false);
   const [loginCheck, setLoginCheck] = useState(false);
@@ -90,4 +90,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default withAuth(Board);

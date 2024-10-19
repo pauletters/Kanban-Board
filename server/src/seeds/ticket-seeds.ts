@@ -8,4 +8,10 @@ export const seedTickets = async () => {
     { name: 'Test the API', status: 'Todo', description: 'Test the API using Insomnia.', assignedUserId: 1 },
     { name: 'Deploy to production', status: 'Todo', description: 'Deploy the application to Render.', assignedUserId: 2 },
   ]);
+
+  console.log('Seeded tickets');
+  const tickets = await Ticket.findAll();
+  tickets.forEach((ticket: Ticket) => {
+    console.log(`- ${ticket.name} (ID: ${ticket.id}, Status: ${ticket.status}, Assigned to: ${ticket.assignedUserId})`);
+  });
 };

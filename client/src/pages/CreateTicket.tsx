@@ -4,8 +4,9 @@ import { createTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI';
+import { withAuth } from '../utils/withAuth';
 
-const CreateTicket = () => {
+const CreateTicket: React.FC = () => {
   const [newTicket, setNewTicket] = useState<TicketData | undefined>(
     {
       id: 0,
@@ -118,4 +119,4 @@ const CreateTicket = () => {
   )
 };
 
-export default CreateTicket;
+export default withAuth(CreateTicket);
