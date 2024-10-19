@@ -30,7 +30,7 @@ class AuthService {
       return false;
     } catch (err) {
       console.log('Error decoding token:', err);
-      return false;
+      return true;
     }
   }
 
@@ -55,6 +55,16 @@ class AuthService {
     const profile = this.getProfile();
     return profile ? { id: profile.id, username: profile.username } : null;
   }
-}
+
+  checkAuthAndRedirect(): boolean {
+    const token = this.getToken();
+    if (!token || this.isTokenExpired(token)) {
+      this.logout();
+      return false;
+    } 
+      return true;
+    }
+  }
+
 
 export default new AuthService();

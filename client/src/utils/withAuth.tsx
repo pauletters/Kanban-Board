@@ -1,23 +1,22 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Auth from './auth'; 
 
-export const withAuth = <P extends object>(
+export interface WithAuthProps {
+    checkAuth: () => boolean;
+}
+
+export const withAuth = <P extends WithAuthProps>(
   WrappedComponent: React.ComponentType<P>
 ) => {
-  return (props: P) => {
-    const navigate = useNavigate();
-
-    const checkAuth = () => {
-        if (!Auth.loggedIn()) {
-          navigate('/login');
-          return false;
-        }
-        return true;
-      };
-  
-      return <WrappedComponent {...props} checkAuth={checkAuth} />;
+        const WithAuth: React.FC<Omit<P, keyof WithAuthProps>> = (props) => {
+        const checkAuth = () => {
+        return Auth.checkAuthAndRedirect();
     };
+  
+      return <WrappedComponent {...props as P} checkAuth={checkAuth} />;
+    };
+
+    return WithAuth;
   };
   
   export default withAuth;

@@ -7,9 +7,10 @@ import { MouseEventHandler } from 'react';
 interface TicketCardProps {
   ticket: TicketData;
   deleteTicket: (ticketId: number) => Promise<ApiMessage>
+  editTicket: (ticketId: number) => void; 
 }
 
-const TicketCard = ({ ticket, deleteTicket }: TicketCardProps) => {
+const TicketCard: React.FC<TicketCardProps> = ({ ticket, deleteTicket, editTicket }) => {
 
   const handleDelete: MouseEventHandler<HTMLButtonElement> = async (event) => {
     const ticketId = Number(event.currentTarget.value);
@@ -28,7 +29,8 @@ const TicketCard = ({ ticket, deleteTicket }: TicketCardProps) => {
       <h3>{ticket.name}</h3>
       <p>{ticket.description}</p>
       <p>{ticket.assignedUser?.username}</p>
-      <Link to='/edit' state={{id: ticket.id}} type='button' className='editBtn'>Edit</Link>
+      <Link to='/edit' state={{id: ticket.id}} type='button' className='editBtn' onClick={() => 
+        ticket.id !== null && editTicket(ticket.id)}>Edit</Link>
       <button type='button' value={String(ticket.id)} onClick={handleDelete} className='deleteBtn'>Delete</button>
     </div>
   );

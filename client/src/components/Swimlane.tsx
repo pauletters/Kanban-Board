@@ -6,9 +6,10 @@ interface SwimlaneProps {
   title: string;
   tickets: TicketData[];
   deleteTicket: (ticketId: number) => Promise<ApiMessage>
+  editTicket: (ticketID: number) => void;
 }
 
-const Swimlane = ({ title, tickets, deleteTicket }: SwimlaneProps) => {
+const Swimlane = ({ title, tickets, deleteTicket, editTicket }: SwimlaneProps) => {
   const getStatusClass = (status: string) => {
     switch (status) {
       case 'Todo':
@@ -30,6 +31,7 @@ const Swimlane = ({ title, tickets, deleteTicket }: SwimlaneProps) => {
           key={ticket.id}
           ticket={ticket}
           deleteTicket={deleteTicket}
+          editTicket={editTicket}
         />
       ))}
     </div>
