@@ -4,9 +4,11 @@ import { createTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI';
-import { withAuth } from '../utils/withAuth';
+import { withAuth, WithAuthProps } from '../utils/withAuth';
 
-const CreateTicket: React.FC = () => {
+interface CreateTicketProps extends WithAuthProps {}
+
+const CreateTicket: React.FC<CreateTicketProps> = ({ checkAuth }) => {
   const [newTicket, setNewTicket] = useState<TicketData | undefined>(
     {
       id: 0,
@@ -23,11 +25,13 @@ const CreateTicket: React.FC = () => {
   const [users, setUsers] = useState<UserData[] | undefined>([]);
 
   const getAllUsers = async () => {
-    try {
-      const data = await retrieveUsers();
-      setUsers(data);
-    } catch (err) {
-      console.error('Failed to retrieve user info', err);
+    if (checkAuth()) {
+      try {
+        const data = await retrieveUsers();
+        setUsers(data);
+      } catch (err) {
+        console.error('Failed to retrieve user info', err);
+      }
     }
   };
 
@@ -37,12 +41,18 @@ const CreateTicket: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (newTicket){
-      const data = await createTicket(newTicket);
-      console.log(data);
-      navigate('/');
+    if (checkAuth() && newTicket) {
+      try {
+        const data = await createTicket(newTicket);
+        console.log(data);
+        navigate('/');
+      } catch (err) {
+        console.error('Failed to create ticket:', err);
+      }
+    } else {
+      navigate('/login');
     }
-  }
+  };
 
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -62,8 +72,7 @@ const CreateTicket: React.FC = () => {
   return (
     <>
       <div className='container'>
-        <form className='form' onSubmit=
-        {handleSubmit}>
+        <form className='form' onSubmit={handleSubmit}>
           <h1>Create Ticket</h1>
           <label htmlFor='tName'>Ticket Name</label>
           <textarea 
@@ -71,7 +80,7 @@ const CreateTicket: React.FC = () => {
             name='name'
             value={newTicket?.name || ''}
             onChange={handleTextAreaChange}
-            />
+          />
           <label htmlFor='tStatus'>Ticket Status</label>
           <select 
             name='status' 
@@ -103,20 +112,19 @@ const CreateTicket: React.FC = () => {
                 </option>
               )
             }) : (
-            <textarea 
-              id='tUserId'
-              name='assignedUserId'
-              value={newTicket?.assignedUserId || 0}
-              onChange={handleTextAreaChange}
-            />
-            )
-          }
+              <textarea 
+                id='tUserId'
+                name='assignedUserId'
+                value={newTicket?.assignedUserId || 0}
+                onChange={handleTextAreaChange}
+              />
+            )}
           </select>
           <button type='submit' onSubmit={handleSubmit}>Submit Form</button>
         </form>
       </div>
     </>
-  )
+  );
 };
 
 export default withAuth(CreateTicket);
