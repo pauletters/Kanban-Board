@@ -1,10 +1,10 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { withAuth } from '../utils/withAuth';
 import { retrieveTicket, updateTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 
-const EditTicket = () => {
+const EditTicket: React.FC = () => {
   const [ticket, setTicket] = useState<TicketData | undefined>();
 
   const navigate = useNavigate();
@@ -87,4 +87,4 @@ const EditTicket = () => {
   );
 };
 
-export default EditTicket;
+export default withAuth(EditTicket);

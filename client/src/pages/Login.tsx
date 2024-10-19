@@ -1,13 +1,16 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-
+import { useNavigate } from "react-router-dom";
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     username: '',
     password: ''
   });
+
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -20,15 +23,24 @@ const Login = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await login(loginData);
-      Auth.login(data.token);
+      console.log('Submitting login form');
+      const token = await login(loginData);
+      console.log('Token received:', token ? 'Yes' : 'No')
+      if (!token){
+        throw new Error('No token received');
+      }
+      Auth.login(token);
+      console.log('Login successful, redirecting to /board');
+      navigate('/board');
     } catch (err) {
       console.error('Failed to login', err);
+      setError('Invalid username or password');
     }
   };
 
   return (
     <div className='container'>
+      {error && <div className='error'>{error}</div>}
       <form className='form' onSubmit={handleSubmit}>
         <h1>Login</h1>
         <label >Username</label>

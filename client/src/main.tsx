@@ -20,6 +20,10 @@ const router = createBrowserRouter([
         element: <Board />
       }, 
       {
+        path: '/board',
+        element: <Board />
+      },
+      {
         path: '/edit',
         element: <EditTicket />
       },
