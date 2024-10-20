@@ -51,11 +51,13 @@ class AuthService {
     window.location.assign('/login');
   }
 
+  // This retrieves the user from the token
   getUser(): { id: string; username: string } | null {
     const profile = this.getProfile();
     return profile ? { id: profile.id, username: profile.username } : null;
   }
 
+  // This checks if the user is authenticated and redirects if not
   checkAuthAndRedirect(): boolean {
     const token = this.getToken();
     if (!token || this.isTokenExpired(token)) {

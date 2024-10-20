@@ -2,12 +2,14 @@ import { TicketData } from '../interfaces/TicketData';
 import { ApiMessage } from '../interfaces/ApiMessage';
 import Auth from '../utils/auth';
 
+// This function will check if the user is authenticated before making a request to the server
 const checkAuthBeforeRequest = () => {
   if (!Auth.checkAuthAndRedirect()) {
     throw new Error('Not authenticated');
   }
 };
 
+// This retireves all tickets from the server
 const retrieveTickets = async () => {
   try {
     checkAuthBeforeRequest();
@@ -33,6 +35,7 @@ const retrieveTickets = async () => {
   }
 };
 
+// This retrieves a single ticket from the server
 const retrieveTicket = async (id: number | null): Promise<TicketData> => {
   try {
     checkAuthBeforeRequest();
@@ -58,6 +61,7 @@ const retrieveTicket = async (id: number | null): Promise<TicketData> => {
   }
 }
 
+// This creates a ticket on the server
 const createTicket = async (body: TicketData) => {
   try {
     checkAuthBeforeRequest();
@@ -86,6 +90,7 @@ const createTicket = async (body: TicketData) => {
   }
 }
 
+// This updates a ticket on the server
 const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketData> => {
   try {
     checkAuthBeforeRequest();
@@ -112,6 +117,7 @@ const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketD
   }
 };
 
+// This deletes a ticket on the server
 const deleteTicket = async (ticketId: number): Promise<ApiMessage> => {
   try {
     checkAuthBeforeRequest();

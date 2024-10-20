@@ -1,5 +1,6 @@
 import Auth from '../utils/auth';
 
+// This function will check if the user is authenticated before making a request to the server
 const retrieveUsers = async () => {
   try {
     const response = await fetch('/api/users', {

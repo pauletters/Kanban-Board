@@ -194,6 +194,13 @@ tbody tr:nth-child(odd) {
   border-radius: 10px;
 }
 
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
 .form > h1, .form > label {
   color: #006D77;
 }

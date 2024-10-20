@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3001;
 
 const forceDatabaseRefresh = false;
 
+// If the environment is production and the forceDatabaseRefresh is set to true, then log a warning and exit the process
 if (process.env.NODE_ENV === 'production' && forceDatabaseRefresh) {
   console.error('WARNING: Database refresh is set to true in production environment!');
   process.exit(1);
