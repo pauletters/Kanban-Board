@@ -4,14 +4,17 @@ import { TicketData } from '../interfaces/TicketData';
 import { ApiMessage } from '../interfaces/ApiMessage';
 import { MouseEventHandler } from 'react';
 
+// This component is responsible for rendering a ticket card
 interface TicketCardProps {
   ticket: TicketData;
   deleteTicket: (ticketId: number) => Promise<ApiMessage>
   editTicket: (ticketId: number) => void; 
 }
 
+// This component is responsible for rendering a ticket card
 const TicketCard: React.FC<TicketCardProps> = ({ ticket, deleteTicket, editTicket }) => {
 
+  // This function will handle the deletion of a ticket
   const handleDelete: MouseEventHandler<HTMLButtonElement> = async (event) => {
     const ticketId = Number(event.currentTarget.value);
     if (!isNaN(ticketId)) {

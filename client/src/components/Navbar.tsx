@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../utils/auth';
+
 
 const Navbar = () => {
   const [ loginCheck, setLoginCheck ] = useState(false);
+  const navigate = useNavigate();
 
   const checkLogin = () => {
     if(auth.loggedIn()) {
@@ -16,10 +18,19 @@ const Navbar = () => {
     checkLogin();
   }, [loginCheck])
 
+  const handleBoardClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (auth.loggedIn()) {
+      navigate('/board');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <div className='nav'>
       <div className='nav-title'>
-        <Link to='/'>Krazy Kanban Board</Link>
+        <Link to='/' onClick={handleBoardClick}>Krazy Kanban Board</Link>
       </div>
       <ul>
       {

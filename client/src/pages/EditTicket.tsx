@@ -4,6 +4,7 @@ import { withAuth, WithAuthProps } from '../utils/withAuth';
 import { retrieveTicket, updateTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 
+// This component is responsible for rendering the edit ticket form
 interface EditTicketProps extends WithAuthProps {}
 
 const EditTicket: React.FC<EditTicketProps> = ({ checkAuth }) => {
@@ -12,6 +13,7 @@ const EditTicket: React.FC<EditTicketProps> = ({ checkAuth }) => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  // This function will fetch a single ticket after the user is authenticated
   const fetchTicket = async (ticketId: TicketData) => {
     if (checkAuth()) {
       try {
@@ -30,6 +32,7 @@ const EditTicket: React.FC<EditTicketProps> = ({ checkAuth }) => {
     fetchTicket(state);
   }, []);
 
+  // This function will handle the submission of the form after the user is authenticated
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (checkAuth() && ticket && ticket.id !== null) {

@@ -6,6 +6,7 @@ import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI';
 import { withAuth, WithAuthProps } from '../utils/withAuth';
 
+// This component is responsible for rendering the create ticket form
 interface CreateTicketProps extends WithAuthProps {}
 
 const CreateTicket: React.FC<CreateTicketProps> = ({ checkAuth }) => {
@@ -24,6 +25,7 @@ const CreateTicket: React.FC<CreateTicketProps> = ({ checkAuth }) => {
 
   const [users, setUsers] = useState<UserData[] | undefined>([]);
 
+  // This function will fetch all users after the user is authenticated
   const getAllUsers = async () => {
     if (checkAuth()) {
       try {
@@ -39,6 +41,7 @@ const CreateTicket: React.FC<CreateTicketProps> = ({ checkAuth }) => {
     getAllUsers();
   }, []);
 
+  // This function will handle the submission of the form
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (checkAuth() && newTicket) {

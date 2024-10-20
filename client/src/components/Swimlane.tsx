@@ -2,6 +2,7 @@ import TicketCard from './TicketCard';
 import { TicketData } from '../interfaces/TicketData';
 import { ApiMessage } from '../interfaces/ApiMessage';
 
+// This component is responsible for rendering a swimlane for each status
 interface SwimlaneProps {
   title: string;
   tickets: TicketData[];
@@ -9,6 +10,7 @@ interface SwimlaneProps {
   editTicket: (ticketID: number) => void;
 }
 
+// This component will render a swimlane for each status
 const Swimlane = ({ title, tickets, deleteTicket, editTicket }: SwimlaneProps) => {
   const getStatusClass = (status: string) => {
     switch (status) {

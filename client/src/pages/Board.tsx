@@ -8,6 +8,7 @@ import { TicketData } from '../interfaces/TicketData';
 import { ApiMessage } from '../interfaces/ApiMessage';
 import auth from '../utils/auth';
 
+// This component is responsible for rendering the board
 interface BoardProps extends WithAuthProps {
   checkAuth: () => boolean;
 }
@@ -20,12 +21,14 @@ const Board: React.FC<BoardProps> = ({ checkAuth }) => {
   const [loginCheck, setLoginCheck] = useState(false);
   const navigate = useNavigate();
 
+  // This function will check if the user is logged in
   const checkLogin = () => {
     if(auth.loggedIn()) {
       setLoginCheck(true);
     }
   };
 
+  // This function will fetch all tickets after the user is authenticated
   const fetchTickets = async () => {
     if (checkAuth()) {
     try {
@@ -38,6 +41,7 @@ const Board: React.FC<BoardProps> = ({ checkAuth }) => {
     }
   };
 
+  // This function will handle the creation of a new ticket after the user is authenticated
   const handleNewTicket = (e: React.MouseEvent) => {
     if (!checkAuth()) {
       e.preventDefault();
@@ -45,6 +49,7 @@ const Board: React.FC<BoardProps> = ({ checkAuth }) => {
     }
   };
 
+  // This function will handle the editing of a ticket after the user is authenticated
   const handleEditTicket = async (ticketId: number) => {
     if (checkAuth()) {
       navigate(`/edit/${ticketId}`);
@@ -53,6 +58,7 @@ const Board: React.FC<BoardProps> = ({ checkAuth }) => {
     }
   };
 
+  // This function will delete an individual ticket after the user is authenticated
   const deleteIndvTicket = async (ticketId: number) : Promise<ApiMessage> => {
     if (checkAuth()) {
     try {

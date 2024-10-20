@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
 
+// This component is responsible for rendering the login form
 const Login = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
@@ -20,6 +21,7 @@ const Login = () => {
     });
   };
 
+  // This function will handle the submission of the form and sends an error message if the login fails
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -40,7 +42,6 @@ const Login = () => {
 
   return (
     <div className='container'>
-      {error && <div className='error'>{error}</div>}
       <form className='form' onSubmit={handleSubmit}>
         <h1>Login</h1>
         <label >Username</label>
@@ -58,6 +59,7 @@ const Login = () => {
           onChange={handleChange}
         />
         <button type='submit'>Submit Form</button>
+        {error && <div className='error'>{error}</div>}
       </form>
     </div>
     
