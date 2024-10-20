@@ -26,13 +26,14 @@ a {
   font-weight: 500;
   color: #000000;
   text-decoration: inherit;
+  padding-bottom: 1em;
 }
 a:hover {
   color: #535bf2;
 }
 
 body {
-  background: #ECF0F1;
+  background: #006D77;
   background-size: cover;
   background-repeat: no-repeat no-repeat;
   background-position: center center;
@@ -50,16 +51,17 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 0.6em 1.2em 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin-right: 1em;
 }
 button:hover {
-  border-color: #646cff;
+  color: #646cff;
 }
 button:focus,
 button:focus-visible {
@@ -87,7 +89,7 @@ tbody tr:nth-child(odd) {
 /* Navbar Content */
 .nav {
   display: flex;
-  padding: 1em 2em;
+  padding: .5em 1em;
 }
 
 .nav ul {
@@ -105,7 +107,7 @@ tbody tr:nth-child(odd) {
 }
 
 .nav-title a {
-  color: #b864c4;
+  color: #83C5BE;
 }
 
 .nav-item {
@@ -147,15 +149,15 @@ tbody tr:nth-child(odd) {
 }
 
 .todo {
-  background-color: #e9cbec;
+  background-color: #efe0d6;
 }
 
 .inprogress {
-  background-color: #b864c4;
+  background-color: #82C0CC;
 }
 
 .done {
-  background-color: #732381;
+  background-color: #eeb059;
 }
 
 .ticket-card {
@@ -183,16 +185,17 @@ tbody tr:nth-child(odd) {
 .form {
   width: 60%;
   height: 80%;
-  background-color: #b864c4;
+  background-color: #eeb059;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
 }
 
 .form > h1, .form > label {
-  color: yellow;
+  color: #006D77;
 }
 
 .form > input {
