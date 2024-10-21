@@ -24,7 +24,7 @@ Upon loading up the page you will be brought initially to the main page which co
 
 ![](./client/src/assets/loadpage-screenshot.jpg)
 
-The login page is pretty straightforward. There is a space to input your username and a space to input your password. Once that is done simply click the Submit form button.  If your username and password are valid you will be brought to the Kanban board page. If it is not you will see an error message pop up below the button.
+The login page is pretty straightforward. There is a space to input your username and a space to input your password. Once that is done simply click the Submit form button.  If your username and password are valid you will be brought to the Kanban board page. If it is not you will see an error message pop up below the button. For testing purposes, feel free to use the usernames JollyGuru, SunnyScribe, or RadiantComet, and the password of "password".
 
 ![](./client/src/assets/login-screenshot.jpg)
 
