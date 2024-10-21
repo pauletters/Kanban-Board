@@ -16,19 +16,23 @@ console.log('DB_URL:', process.env.DB_URL);
 
 let sequelize: Sequelize;
 
-// This try/catch block will attempt to connect to the database using the environment variables. If 
-// the connection is successful, it will log a message to the console. If the connection fails, it will then throw an error.
+// This try/catch block will attempt to connect to the database using the environment variables.
 try {
   if (process.env.DB_URL) {
     sequelize = new Sequelize(process.env.DB_URL, {
       dialect: 'postgres',
-      logging: console.log, // Remove this in production
+      dialectOptions: {
+        decimalNumbers: true,
+      },
     });
   } else if (process.env.DB_NAME && process.env.DB_USER && process.env.DB_PASSWORD) {
-    sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    sequelize = new Sequelize(
+      process.env.DB_NAME,
+      process.env.DB_USER, 
+      process.env.DB_PASSWORD, 
+      {
       host: process.env.DB_HOST || 'localhost',
       dialect: 'postgres',
-      logging: console.log, // Remove this in production
       dialectOptions: {
         decimalNumbers: true,
       },
